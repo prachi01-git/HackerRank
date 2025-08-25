@@ -1,4 +1,4 @@
-*int*icecreamParlor(intm,int arr_count,int*result_count){
+int*icecreamParlor(int m,int arr_count,int* arr,int*result_count){
 int max_price=10000;
 int *map=(int*)calloc(max_price+1,sizeof(int));
 int*result=(int*)malloc(sizeof(int));
@@ -22,3 +22,4 @@ free(map);
 result[0]=result[1]=-1;
 return result;
 }
+
