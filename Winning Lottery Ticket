@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class WinningLotteryTicket {
+    public static long winningLotteryTicket(String[] tickets) {
+        int[] maskCount = new int[1024]; // 2^10 possible digit combinations
+
+        for (String ticket : tickets) {
+            int mask = 0;
+            for (char c : ticket.toCharArray()) {
+                mask |= 1 << (c - '0');
+            }
+            maskCount[mask]++;
+        }
+
+        long result = 0;
+        for (int i = 0; i < 1024; i++) {
+            for (int j = i + 1; j < 1024; j++) {
+                if ((i | j) == 1023) { // 1023 = binary 1111111111 (all digits)
+                    result += (long) maskCount[i] * maskCount[j];
+                }
+            }
+        }
+
+        // Count pairs within the same mask if it already contains all digits
+        result += (long) maskCount[1023] * (maskCount[1023] - 1) / 2;
+
+        return result;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        String[] tickets = new String[n];
+        for (int i = 0; i < n; i++) {
+            tickets[i] = scanner.next();
+        }
+        System.out.println(winningLotteryTicket(tickets));
+    }
+}
